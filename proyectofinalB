@@ -1,0 +1,68 @@
+import processing.sound.*;
+
+AudioIn input;
+Amplitude analyzer;
+
+int x=400;
+int vx=5;
+
+float vol;
+
+void setup() {
+  size(700, 700);
+  background(0, 0, 0);
+  
+  input = new AudioIn(this, 0);
+  input.start();
+
+  analyzer = new Amplitude(this);
+  analyzer.input(input);
+}
+
+void draw() {
+  //background(0, 0, 0);
+  vol = analyzer.analyze();
+  
+}
+
+void grapher() {
+  fill(255);
+  ellipse(x, 350 + vol*(-700), 5, 5);
+  if (x<0 || x>width-200) {
+    vx = (-1)*vx;
+  }
+  x = x + vx;
+}
+
+void spectometer() {
+  float valvol = vol*100;
+  background(valvol*15, valvol*valvol, valvol*PI);
+  //rect(1000, 0, 200, 400);
+}
+
+void stereo() {
+  int radio=height;
+  float valorvol=vol*1000;
+  
+  ellipse(width/2, height/2, radio, radio);
+  fill(valorvol*50,(valorvol)*(valorvol),valorvol*PI);
+ 
+  if (radio<30) {
+    radio=800;
+  }
+  radio=radio-100;
+}
+
+void keyPressed() {
+  //boolean bool=false;
+  //background(0, 0, 0);
+  if (key=='g' || key=='G') {
+    grapher();
+  }
+  if (key=='s' || key=='S') {
+    spectometer();
+  }
+  if (key=='t' || key=='T') {
+    stereo();
+  }
+}
