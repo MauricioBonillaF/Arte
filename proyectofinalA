@@ -1,0 +1,38 @@
+import processing.sound.*;
+
+AudioIn input;
+Amplitude analyzer;
+
+float x=400;
+int vx=7;
+int radio=800;
+void setup() {
+  size(700, 600);
+  background(0, 0, 0);
+  
+  input = new AudioIn(this, 0);
+  input.start();
+
+  analyzer = new Amplitude(this);
+  analyzer.input(input);
+}
+
+void draw() {
+  //background(0, 0, 0);
+  float vol = analyzer.analyze();
+  //int y=0;
+ //text(vol, y, x);
+  //if (x<0 || x>800) {
+    //y = y*20;}
+float valorvol=vol*1000;
+
+
+  ellipse(350,300,radio,radio);
+ fill(valorvol*50,(valorvol)*(valorvol),valorvol*3.1415);
+ 
+ if(radio<30){
+   radio=800;}
+ //x = x + vx;
+
+  radio=radio-100;
+}
